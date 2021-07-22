@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="300dp"
+    android:layout_height="match_parent">
+
+
+    <View
+        android:id="@+id/v_header_containerView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="#E1D3DF"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imgv_header_applogo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@mipmap/applogo"
+        android:layout_margin="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_header_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="monospace"
+        android:gravity="left"
+        android:text="ToDo_List App"
+        android:textColor="@color/purple_700"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/imgv_header_applogo"
+        app:layout_constraintTop_toBottomOf="@id/imgv_header_applogo" />
+</androidx.constraintlayout.widget.ConstraintLayout>
