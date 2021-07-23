@@ -40,15 +40,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
-            <!--            <ExpandableListView-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:id="@+id/expandedList"-->
-            <!--                android:layout_gravity="start"-->
-            <!--                app:layout_constraintTop_toTopOf="parent"-->
-            <!--                android:divider="@color/purple_700"-->
-            <!--                android:dividerHeight=".5dp"-->
-            <!--                />-->
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -80,72 +72,5 @@
 
 
     </androidx.drawerlayout.widget.DrawerLayout>
-    <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent"-->
-    <!--        tools:context=".MainActivity">-->
 
-
-    <!--        <EditText-->
-    <!--            android:id="@+id/et_taskTitle"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:gravity="center"-->
-    <!--            android:hint="ادخل عنوان المهمة"-->
-    <!--            android:textAlignment="center"-->
-    <!--            android:textColor="@color/purple_500"-->
-    <!--            android:backgroundTint="@color/purple_700"-->
-    <!--            android:textSize="25sp"-->
-    <!--            android:inputType="textPersonName"-->
-    <!--            android:textStyle="bold"-->
-    <!--            app:layout_constraintEnd_toEndOf="parent"-->
-    <!--            app:layout_constraintTop_toTopOf="parent"-->
-    <!--            android:layout_marginHorizontal="30dp"-->
-    <!--            android:layout_marginTop="180dp" />-->
-
-    <!--        <EditText-->
-    <!--            android:id="@+id/et_taskContent"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:gravity="center"-->
-    <!--            android:hint="ادخل المهمة"-->
-    <!--            android:textAlignment="center"-->
-    <!--            android:textColor="@color/purple_500"-->
-    <!--            android:backgroundTint="@color/purple_700"-->
-    <!--            android:textSize="25sp"-->
-    <!--            android:textStyle="bold"-->
-    <!--            android:inputType="textEmailAddress"-->
-    <!--            app:layout_constraintEnd_toEndOf="parent"-->
-    <!--            app:layout_constraintTop_toBottomOf="@id/et_taskTitle"-->
-    <!--            android:layout_margin="30dp" />-->
-
-
-    <!--        <androidx.appcompat.widget.AppCompatButton-->
-    <!--            android:id="@+id/btn_add"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:gravity="center"-->
-    <!--            android:text="اضف مهمة جديدة"-->
-    <!--            android:textAlignment="center"-->
-    <!--            android:textColor="@color/white"-->
-    <!--            android:background="@color/purple_200"-->
-    <!--            android:textSize="25sp"-->
-    <!--            android:textStyle="bold"-->
-    <!--            app:layout_constraintEnd_toEndOf="parent"-->
-    <!--            app:layout_constraintTop_toBottomOf="@id/et_taskContent"-->
-    <!--            android:layout_margin="30dp" />-->
-
-
-    <!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-    <!--            android:id="@+id/fab"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_gravity="bottom|end"-->
-    <!--            android:layout_margin="20dp"-->
-    <!--            app:srcCompat="@android:drawable/ic_dialog_email"-->
-    <!--            app:layout_constraintEnd_toEndOf="parent"-->
-    <!--            app:layout_constraintTop_toTopOf="parent"/>-->
-
-
-    <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
 </layout>

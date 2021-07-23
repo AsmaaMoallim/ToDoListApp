@@ -8,6 +8,14 @@ import androidx.room.PrimaryKey;
 @Entity
 public class ToDoModel {
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @PrimaryKey(autoGenerate = true)
     public int id;
 

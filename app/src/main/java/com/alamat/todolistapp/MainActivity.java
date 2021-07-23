@@ -1,14 +1,17 @@
 package com.alamat.todolistapp;
 
+import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
@@ -19,14 +22,14 @@ import com.google.android.material.navigation.NavigationView;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
-
 public class MainActivity extends AppCompatActivity {
 
     static ActivityMainBinding activityMainBinding;
-//    static ArrayList<String> menuItemsList = new ArrayList<String>();
+    //    static ArrayList<String> menuItemsList = new ArrayList<String>();
     static List<ToDoCategoryModel> AllToDoCategory;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,20 @@ public class MainActivity extends AppCompatActivity {
         AllToDoCategory = RoDatabase.getInstance(this).todoDao().getAllTodoCategory();
         createmenu();
 
+//        activityMainBinding.nav.getMenu().getItem(1).setActionView();
+
+//
+//        activityMainBinding.nav.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+//                AlertDialog diaBox = ConfirmDeletion();
+//                diaBox.show();
+//                return false;
+//            }
+//        });
+//
+
+
 
         activityMainBinding.nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             Fragment fragment = null;
@@ -60,10 +77,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
 
-                if (item.getItemId() == R.id.home){
+                if (item.getItemId() == R.id.home) {
                     fragment = new HomeFragment();
-                }
-                else {
+                } else {
                     String itemTitle = (String) item.getTitle();
 //                Intent intent = new Intent(MainActivity.this, TestFragment.class);
                     Bundle extras = new Bundle();
@@ -101,6 +117,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+//
+
+
         activityMainBinding.navFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -136,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
 //        activityMainBinding.etTaskContent.setText("");
 //    }
 
-//
+    //
 //    private void insertTodo() {
 //        ToDoModel todoModel = new ToDoModel(activityInsertNewTodoBinding.etTaskTitle.getText().toString(),
 //                activityInsertNewTodoBinding.etTaskContent.getText().toString(),
@@ -175,4 +194,33 @@ public class MainActivity extends AppCompatActivity {
 //        ToDoCategoryModel toDoCategoryModel = new ToDoCategoryModel();
 //        RoDatabase.getInstance(this).todoDao().insertTodoCategory(toDoCategoryModel);
 //    }
+
+    private AlertDialog ConfirmDeletion() {
+
+        AlertDialog alert = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.AlertDialogCustom))
+                .setTitle("حذف قسم")
+                .setMessage("هل تريد حذف هذا القسم؟")
+                .setPositiveButton("حذف", new DatePickerDialog.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int whichButton) {
+
+                        dialog.dismiss();
+                    }
+
+                })
+
+                .setNegativeButton("إلغاء", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.dismiss();
+
+                    }
+                })
+                .create();
+
+
+        return alert;
+
+
+    }
 }
