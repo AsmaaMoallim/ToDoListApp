@@ -2,6 +2,7 @@ package com.alamat.todolistapp;
 
 
 import android.content.Context;
+import android.view.View;
 
 import androidx.room.Database;
 import androidx.room.Room;
@@ -12,6 +13,18 @@ public abstract class RoDatabase extends RoomDatabase {
 
     private static RoDatabase roomDataBase;
     private static final String DBName = "TodoListDataBase";
+    private static Context context;
+
+    public static RoDatabase getInstance(View.OnClickListener onClickListener) {
+        if (roomDataBase == null){
+            roomDataBase = Room.databaseBuilder(context , RoDatabase.class,DBName)
+                    .allowMainThreadQueries()
+                    .fallbackToDestructiveMigration()
+                    .build();
+        }
+        return roomDataBase;
+    }
+
     public abstract TodoDao todoDao();
 
     public static RoDatabase getInstance(Context context){

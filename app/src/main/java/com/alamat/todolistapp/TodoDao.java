@@ -17,8 +17,11 @@ public interface TodoDao {
     @Query("select * from todomodel;")
     List<ToDoModel> getAllTodo();
 
-    @Query("select * from todomodel where todoCategory like :categoryColValue ")
+    @Query("select * from todomodel where todoCategory = :categoryColValue ")
     List<ToDoModel> getAllTodoWhereCategory(String categoryColValue);
+
+    @Query("delete from todomodel where :id")
+    void deleteRecordWhere(int id);
 
     //////////////////////////////////////////////////////////////////////////
 
@@ -27,5 +30,6 @@ public interface TodoDao {
 
     @Query("select * from toDoCategoryModel;")
     List<ToDoCategoryModel> getAllTodoCategory();
+
 }
 

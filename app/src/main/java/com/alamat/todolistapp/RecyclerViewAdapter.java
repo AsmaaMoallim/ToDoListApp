@@ -59,7 +59,35 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 //
 //            }
 //        });
+        holder.displayItemBinding.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(), "delete cliked" + toDoModel.id , Toast.LENGTH_SHORT).show();
+                deleteRecordWhere(toDoModel.id);
+            }
 
+            private void deleteRecordWhere(int id) {
+                RoDatabase.getInstance(this).todoDao().deleteRecordWhere(id);
+
+                if (HomeFragment.recyclerViewAdapter != null) {
+                    HomeFragment.AllTodo.remove(position);
+                    HomeFragment.recyclerViewAdapter.notifyDataSetChanged();
+                }
+                if (TestFragment.recyclerViewAdapter != null) {
+                    TestFragment.AllTodoWhereCategory.remove(position);
+                    TestFragment.recyclerViewAdapter.notifyDataSetChanged();
+                }
+
+//                TestFragment.recyclerViewAdapter.notifyDataSetChanged();
+            }
+        });
+
+        holder.displayItemBinding.btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(), "Edit Cliked", Toast.LENGTH_SHORT).show();
+            }
+        });
         viewBinderHelper.closeLayout(String.valueOf(toDoModel.getId()));
         holder.displayItemBinding.tvTaskTitle.setText(toDoModel.getTodoTitle());
         holder.displayItemBinding.tvTaskContent.setText(toDoModel.getTodoContect());
@@ -111,20 +139,20 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
 
             /// events
-            displayItemBinding.btnDelete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(v.getContext(), "delete cliked", Toast.LENGTH_SHORT).show();
-
-                }
-            });
-
-            displayItemBinding.btnEdit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(v.getContext(), "Edit Cliked", Toast.LENGTH_SHORT).show();
-                }
-            });
+//            displayItemBinding.btnDelete.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Toast.makeText(v.getContext(), "delete cliked" , Toast.LENGTH_SHORT).show();
+//
+//                }
+//            });
+//
+//            displayItemBinding.btnEdit.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Toast.makeText(v.getContext(), "Edit Cliked", Toast.LENGTH_SHORT).show();
+//                }
+//            });
 
 
         }

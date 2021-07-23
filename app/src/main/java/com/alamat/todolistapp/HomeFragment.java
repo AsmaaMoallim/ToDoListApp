@@ -20,8 +20,10 @@ public class HomeFragment extends Fragment {
     private FragmentHomeBinding fragmentHomeBinding;
     View view;
 
+    static List<ToDoModel> AllTodo;
+
     RecyclerView.LayoutManager layoutManager;
-    RecyclerViewAdapter recyclerViewAdapter;
+    static RecyclerViewAdapter recyclerViewAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,7 +42,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        List<ToDoModel> AllTodo = RoDatabase.getInstance(getContext()).todoDao().getAllTodo();
+        AllTodo = RoDatabase.getInstance(getContext()).todoDao().getAllTodo();
         recyclerViewAdapter = new RecyclerViewAdapter(AllTodo);
         fragmentHomeBinding.recyclerView.setAdapter(recyclerViewAdapter);
     }

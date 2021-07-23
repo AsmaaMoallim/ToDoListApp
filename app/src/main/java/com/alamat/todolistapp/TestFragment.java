@@ -21,8 +21,9 @@ public class TestFragment extends Fragment {
     private FragmentTestBinding fragmentTestBinding;
     View view;
 
+    static List<ToDoModel> AllTodoWhereCategory ;
     RecyclerView.LayoutManager layoutManager;
-    RecyclerViewAdapter recyclerViewAdapter;
+    static RecyclerViewAdapter recyclerViewAdapter;
 
     public static String categoryColValue = "";
     @Override
@@ -53,7 +54,7 @@ public class TestFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        List<ToDoModel> AllTodoWhereCategory = RoDatabase.getInstance(getContext()).todoDao().getAllTodoWhereCategory(categoryColValue);
+        AllTodoWhereCategory = RoDatabase.getInstance(getContext()).todoDao().getAllTodoWhereCategory(categoryColValue);
         recyclerViewAdapter = new RecyclerViewAdapter(AllTodoWhereCategory);
         fragmentTestBinding.recyclerView.setAdapter(recyclerViewAdapter);
     }
