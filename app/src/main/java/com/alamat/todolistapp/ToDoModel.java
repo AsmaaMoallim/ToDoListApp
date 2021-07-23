@@ -17,13 +17,17 @@ public class ToDoModel {
     @ColumnInfo
     String todoContect;
 
+    @ColumnInfo
+    String todoCategory;
+
     public ToDoModel() {
     }
 
     @Ignore
-    public ToDoModel(String todoTitle, String todoContect) {
+    public ToDoModel(String todoTitle, String todoContect, String todoCategory) {
         this.todoTitle = todoTitle;
         this.todoContect = todoContect;
+        this.todoCategory = todoCategory;
     }
 
     public String getTodoTitle() {
@@ -42,4 +46,11 @@ public class ToDoModel {
         this.todoContect = todoContect;
     }
 
+    public String getTodoCategory() {
+        return todoCategory;
+    }
+
+    public void setTodoCategory(String todoCategory) {
+        this.todoCategory = todoCategory;
+    }
 }

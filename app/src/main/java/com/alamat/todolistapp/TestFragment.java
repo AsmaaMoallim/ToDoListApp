@@ -1,64 +1,60 @@
 package com.alamat.todolistapp;
 
+import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link TestFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.alamat.todolistapp.databinding.FragmentTestBinding;
+
+import java.util.List;
+
+
 public class TestFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private FragmentTestBinding fragmentTestBinding;
+    View view;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    RecyclerView.LayoutManager layoutManager;
+    RecyclerViewAdapter recyclerViewAdapter;
 
-    public TestFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment TestFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static TestFragment newInstance(String param1, String param2) {
-        TestFragment fragment = new TestFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
+    public static String categoryColValue = "";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_test, container, false);
+        fragmentTestBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_test, container, false);
+
+        categoryColValue = getArguments().getString("itemTitle");
+
+        layoutManager = new LinearLayoutManager(getContext());
+        recyclerViewAdapter = new RecyclerViewAdapter(null);
+        fragmentTestBinding.recyclerView.setLayoutManager(layoutManager);
+        fragmentTestBinding.recyclerView.setAdapter(recyclerViewAdapter);
+
+        fragmentTestBinding.fabAddNewData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), InsertNewTodoActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        view = fragmentTestBinding.getRoot();
+        return view;
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        List<ToDoModel> AllTodoWhereCategory = RoDatabase.getInstance(getContext()).todoDao().getAllTodoWhereCategory(categoryColValue);
+        recyclerViewAdapter = new RecyclerViewAdapter(AllTodoWhereCategory);
+        fragmentTestBinding.recyclerView.setAdapter(recyclerViewAdapter);
     }
 }

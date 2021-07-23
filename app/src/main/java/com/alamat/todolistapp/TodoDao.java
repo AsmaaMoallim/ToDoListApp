@@ -16,4 +16,16 @@ public interface TodoDao {
 
     @Query("select * from todomodel;")
     List<ToDoModel> getAllTodo();
+
+    @Query("select * from todomodel where todoCategory like :categoryColValue ")
+    List<ToDoModel> getAllTodoWhereCategory(String categoryColValue);
+
+    //////////////////////////////////////////////////////////////////////////
+
+    @Insert
+    void insertTodoCategory(ToDoCategoryModel toDoCategoryModel);
+
+    @Query("select * from toDoCategoryModel;")
+    List<ToDoCategoryModel> getAllTodoCategory();
 }
+

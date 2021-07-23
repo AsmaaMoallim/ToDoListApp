@@ -4,10 +4,5 @@
         android:id="@+id/home"
         android:title="home"
         />
-    <item
-        android:id="@+id/work"
-        android:title="work"/>
-    <item
-        android:id="@+id/test"
-        android:title="test"/>
+
 </menu>

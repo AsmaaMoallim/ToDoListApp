@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".InsertNewTodoActivity">
+
+
+        <EditText
+            android:id="@+id/et_taskTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="180dp"
+            android:backgroundTint="@color/purple_700"
+            android:gravity="center"
+            android:hint="ادخل عنوان المهمة"
+            android:inputType="textPersonName"
+            android:textAlignment="center"
+            android:textColor="@color/purple_500"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/et_taskContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            android:backgroundTint="@color/purple_700"
+            android:gravity="center"
+            android:hint="ادخل المهمة"
+            android:inputType="textEmailAddress"
+            android:textAlignment="center"
+            android:textColor="@color/purple_500"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_taskTitle" />
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_addTsak"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            android:background="@color/purple_200"
+            android:gravity="center"
+            android:text="اضف مهمة جديدة"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_taskContent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

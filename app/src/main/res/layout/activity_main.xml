@@ -17,18 +17,18 @@
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/toolbar_container"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/toolbar_container">
+            android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/purple_700"
-                app:titleTextColor="@color/white"
                 app:layout_constraintTop_toTopOf="parent"
-                app:title="@string/app_name" />
+                app:title="@string/app_name"
+                app:titleTextColor="@color/white" />
 
 
             <fragment
@@ -40,6 +40,16 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
+            <!--            <ExpandableListView-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:id="@+id/expandedList"-->
+            <!--                android:layout_gravity="start"-->
+            <!--                app:layout_constraintTop_toTopOf="parent"-->
+            <!--                android:divider="@color/purple_700"-->
+            <!--                android:dividerHeight=".5dp"-->
+            <!--                />-->
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -50,11 +60,23 @@
             android:layout_gravity="start"
             android:layout_marginTop="50dp"
             app:headerLayout="@layout/nav_header"
-            app:layout_constraintStart_toStartOf="parent"
-            app:menu="@menu/nav_drawer_menu"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar_container"
-        />
+            app:menu="@menu/nav_drawer_menu">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/nav_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@android:drawable/ic_dialog_email" />
+
+
+        </com.google.android.material.navigation.NavigationView>
 
 
     </androidx.drawerlayout.widget.DrawerLayout>

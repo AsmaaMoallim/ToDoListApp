@@ -7,7 +7,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {ToDoModel.class},version = 1,exportSchema = false)
+@Database(entities = {ToDoModel.class, ToDoCategoryModel.class},version = 4,exportSchema = false)
 public abstract class RoDatabase extends RoomDatabase {
 
     private static RoDatabase roomDataBase;
