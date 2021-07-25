@@ -20,9 +20,17 @@ public interface TodoDao {
     @Query("select * from todomodel where todoCategory = :categoryColValue ")
     List<ToDoModel> getAllTodoWhereCategory(String categoryColValue);
 
-    @Query("delete from todomodel where :id")
+    @Query("delete from todomodel where id = :id")
     void deleteRecordWhere(int id);
 
+    @Query("select * from todomodel where id = :id ")
+    ToDoModel getOneTodoWhereCategory(int id);
+
+    @Query("update todomodel set todoTitle = :newTitle , todoContect = :newContent where id = :id ")
+    void update(String newTitle , String newContent , int id);
+
+    @Query("select * from todomodel where todoTitle = :key or todoContect = :key")
+    List<ToDoModel> search(String key);
     //////////////////////////////////////////////////////////////////////////
 
     @Insert

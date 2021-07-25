@@ -4,6 +4,7 @@ package com.alamat.todolistapp;
 import android.content.Context;
 import android.view.View;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
@@ -25,6 +26,16 @@ public abstract class RoDatabase extends RoomDatabase {
         return roomDataBase;
     }
 
+    public static RoDatabase getInstance(SearchView.OnQueryTextListener onQueryTextListener) {
+        if (roomDataBase == null){
+            roomDataBase = Room.databaseBuilder(context , RoDatabase.class,DBName)
+                    .allowMainThreadQueries()
+                    .fallbackToDestructiveMigration()
+                    .build();
+        }
+        return roomDataBase;
+    }
+
     public abstract TodoDao todoDao();
 
     public static RoDatabase getInstance(Context context){
@@ -36,4 +47,5 @@ public abstract class RoDatabase extends RoomDatabase {
         }
         return roomDataBase;
     }
+
 }

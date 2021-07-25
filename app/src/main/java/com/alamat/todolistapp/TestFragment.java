@@ -1,5 +1,6 @@
 package com.alamat.todolistapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -57,5 +58,17 @@ public class TestFragment extends Fragment {
         AllTodoWhereCategory = RoDatabase.getInstance(getContext()).todoDao().getAllTodoWhereCategory(categoryColValue);
         recyclerViewAdapter = new RecyclerViewAdapter(AllTodoWhereCategory);
         fragmentTestBinding.recyclerView.setAdapter(recyclerViewAdapter);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        AllTodoWhereCategory.clear();
+        HomeFragment.AllTodo = RoDatabase.getInstance(getContext()).todoDao().getAllTodo();
+
+
+//        Toast.makeText(getContext(), "onStop", Toast.LENGTH_SHORT).show();
+
+
     }
 }

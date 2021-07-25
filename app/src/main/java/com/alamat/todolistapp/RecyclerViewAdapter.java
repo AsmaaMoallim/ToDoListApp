@@ -1,5 +1,8 @@
 package com.alamat.todolistapp;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +17,7 @@ import com.chauthai.swipereveallayout.ViewBinderHelper;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -21,11 +25,62 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
 
     List<ToDoModel> toDoModels;
+    List<ToDoModel> toDoModelCopy = new ArrayList<>()
+    ;
 
+    static int updateElemId = -1;
+    int pos;
     private final ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
+
+    public void filter(String text) {
+        if (toDoModels != null){
+            toDoModelCopy.clear();
+            toDoModelCopy.addAll(toDoModels);
+
+//        toDoModelCopy.removeAll(toDoModels);
+//        Log.e("Tag", " 11");
+//        toDoModelCopy.addAll(toDoModels);
+//        Log.e("Tag", "22 toDoModels " + toDoModels.get(0).todoTitle);
+//        Log.e("Tag", "22 toDoModelCopy " + toDoModelCopy.get(0).todoTitle);
+
+
+//        for(ToDoModel item: toDoModels){
+//            toDoModelCopy.add(item);
+//            Log.e("Tag", item.todoTitle);
+//        }
+
+            //        RecyclerViewAdapter.toDoModelCopy.addAll(toDoModels);
+
+            toDoModels.clear();
+            if (text.isEmpty()) {
+//            toDoModels.removeAll(toDoModels);
+//            for (ToDoModel item : toDoModelCopy) {
+//                toDoModels.add(item);
+//            }
+                toDoModels.addAll(toDoModelCopy);
+//            Log.e("Tag", "44 toDoModels " + toDoModels.get(0).todoTitle);
+//            Log.e("Tag", "44 toDoModelCopy " + toDoModelCopy.get(0).todoTitle);
+
+            } else {
+                text = text.toLowerCase();
+                for (ToDoModel item : toDoModelCopy) {
+//                Log.e("Tag", "else " + toDoModelCopy.get(0).todoTitle);
+
+                    if (item.todoTitle.toLowerCase().contains(text) || item.todoContect.toLowerCase().contains(text)) {
+                        toDoModels.add(item);
+                    }
+                }
+            }
+//        toDoModelCopy.clear();
+            notifyDataSetChanged();
+        }
+
+    }
 
     public RecyclerViewAdapter(List<ToDoModel> toDoModel) {
         this.toDoModels = toDoModel;
+
+//        this.toDoModelCopy = toDoModel;
     }
 
 
@@ -62,30 +117,35 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.displayItemBinding.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "delete cliked" + toDoModel.id , Toast.LENGTH_SHORT).show();
-                deleteRecordWhere(toDoModel.id);
-            }
+                Toast.makeText(v.getContext(), "delete cliked" + toDoModel.id, Toast.LENGTH_SHORT).show();
+//                deleteRecordWhere(toDoModel.id);
+                RoDatabase.getInstance(this).todoDao().deleteRecordWhere(toDoModel.id);
 
-            private void deleteRecordWhere(int id) {
-                RoDatabase.getInstance(this).todoDao().deleteRecordWhere(id);
-
-                if (HomeFragment.recyclerViewAdapter != null) {
+                if (HomeFragment.AllTodo.size() != 0) {
                     HomeFragment.AllTodo.remove(position);
                     HomeFragment.recyclerViewAdapter.notifyDataSetChanged();
-                }
-                if (TestFragment.recyclerViewAdapter != null) {
+                } else if (TestFragment.AllTodoWhereCategory.size() != 0) {
                     TestFragment.AllTodoWhereCategory.remove(position);
                     TestFragment.recyclerViewAdapter.notifyDataSetChanged();
                 }
-
-//                TestFragment.recyclerViewAdapter.notifyDataSetChanged();
+//                pos = position;
             }
+
+
         });
 
         holder.displayItemBinding.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Edit Cliked", Toast.LENGTH_SHORT).show();
+
+                updateElemId = toDoModel.getId();
+                Intent intent = new Intent(v.getContext(), InsertNewTodoActivity.class);
+                Bundle extras = new Bundle();
+                extras.putInt("updateElemId", updateElemId);
+                v.getContext().startActivity(intent);
+
+//                Toast.makeText(v.getContext(), "Edit Cliked", Toast.LENGTH_SHORT).show();
+
             }
         });
         viewBinderHelper.closeLayout(String.valueOf(toDoModel.getId()));
@@ -161,4 +221,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 //            displayItemBinding.tvTaskContent.setText(toDoModel.getTodoContect());
 //        }
     }
+
+//    private void deleteRecordWhere(int id) {
+//        RoDatabase.getInstance(this).todoDao().deleteRecordWhere(id);
+//
+//        if (HomeFragment.AllTodo != null) {
+//            HomeFragment.AllTodo.remove(pos);
+//            HomeFragment.recyclerViewAdapter.notifyDataSetChanged();
+//        } else if (TestFragment.AllTodoWhereCategory != null) {
+//            TestFragment.AllTodoWhereCategory.remove(pos);
+//            TestFragment.recyclerViewAdapter.notifyDataSetChanged();
+//        }
+//
+////                TestFragment.recyclerViewAdapter.notifyDataSetChanged();
+//    }
 }
