@@ -3,8 +3,6 @@ package com.alamat.todolistapp;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -44,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
 
     ArrayList<String> tes;
     static List<ToDoModel> searchedList;
+    static ArrayList<String> list = new ArrayList<>();
+    static ArrayAdapter arrayAdapter;
 
     @Override
 
@@ -57,19 +57,26 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 Log.e("TAG", "onQueryTextSubmit log");
-
-                searchedList = RoDatabase.getInstance(this).todoDao().search(query);
-                for (ToDoModel item : searchedList) {
-                    Log.e("TAG", "here"+item.todoTitle);
+                if (HomeFragment.AllTodo.size() != 0) {
+                    HomeFragment.recyclerViewAdapter.filter(query);
+                } else if (TestFragment.AllTodoWhereCategory.size() != 0) {
+                    TestFragment.recyclerViewAdapter.filter(query);
                 }
-                return false;
+//                searchedList = RoDatabase.getInstance(this).todoDao().search(query);
+//                for (ToDoModel item : searchedList) {
+//                    Log.e("TAG", "here" + item.todoTitle);
+//                }
+                return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
                 Log.e("TAG", "onQueryTextChange log");
-                HomeFragment.recyclerViewAdapter.filter(newText);
-//                TestFragment.recyclerViewAdapter.filter(newText);
+                if (HomeFragment.AllTodo.size() != 0) {
+                    HomeFragment.recyclerViewAdapter.filter(newText);
+                } else if (TestFragment.AllTodoWhereCategory.size() != 0) {
+                    TestFragment.recyclerViewAdapter.filter(newText);
+                }//                TestFragment.recyclerViewAdapter.filter(newText);
 
 //                searchedList = RoDatabase.getInstance(this).todoDao().search(newText);
 //                for (ToDoModel item : searchedList) {
@@ -139,50 +146,51 @@ public class MainActivity extends AppCompatActivity {
         // Right
         activityMainBinding.listView.setSwipeDirection(SwipeMenuListView.DIRECTION_RIGHT);
 
-        ArrayList<String> list = new ArrayList<>();
 //        list.add("swipe");
 //        list.add("swipe");
 //        list.add("swipe");
 //        list.add("swipe");
 //        list.add("swipe");
-        for (int i =0 ; i<activityMainBinding.nav.getMenu().size(); i++){
-            list.add(activityMainBinding.nav.getMenu().getItem(i).getTitle().toString());
-        }
-        ArrayAdapter arrayAdapter = new ArrayAdapter(MainActivity.this,android.R.layout.simple_list_item_1,  list);
+//        for (int i = 0; i < activityMainBinding.nav.getMenu().size(); i++) {
+//            list.add(activityMainBinding.nav.getMenu().getItem(i).getTitle().toString());
+//        }
+        arrayAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, list);
         activityMainBinding.listView.setAdapter(arrayAdapter);
         SwipeMenuCreator creator = new SwipeMenuCreator() {
 
             @Override
             public void create(SwipeMenu menu) {
-                // create "open" item
-                SwipeMenuItem openItem = new SwipeMenuItem(
-                        getApplicationContext());
-                // set item background
-                openItem.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9,
-                        0xCE)));
-                // set item width
-                openItem.setWidth(90);
-                // set item title
-                openItem.setTitle("Open");
-                // set item title fontsize
-                openItem.setTitleSize(18);
-                // set item title font color
-                openItem.setTitleColor(Color.WHITE);
-                // add to menu
-//                SwipeMenu m = (SwipeMenu) activityMainBinding.nav.getMenu();
-//                m.addMenuItem(openItem);
-//                menu.addMenuItem(openItem);
+//                // create "open" item
+//                SwipeMenuItem openItem = new SwipeMenuItem(
+//                        getApplicationContext());
+//                // set item background
+//                openItem.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9,
+//                        0xCE)));
+//                // set item width
+//                openItem.setWidth(90);
+//                // set item title
+//                openItem.setTitle("Open");
+//                // set item title fontsize
+//                openItem.setTitleSize(18);
+//                // set item title font color
+//                openItem.setTitleColor(Color.WHITE);
+//                // add to menu
+////                SwipeMenu m = (SwipeMenu) activityMainBinding.nav.getMenu();
+////                m.addMenuItem(openItem);
+////                menu.addMenuItem(openItem);
 
                 // create "delete" item
                 SwipeMenuItem deleteItem = new SwipeMenuItem(
                         getApplicationContext());
                 // set item background
-                deleteItem.setBackground(new ColorDrawable(Color.rgb(0xF9,
-                        0x3F, 0x25)));
+//                deleteItem.setBackground(new ColorDrawable(Color.rgb(0xF9,
+//                        0x3F, 0x25)));
                 // set item width
-                deleteItem.setWidth(100);
+                deleteItem.setWidth(250);
                 // set a icon
-                deleteItem.setIcon(R.drawable.ic_launcher_background);
+//                deleteItem.setIcon(R.drawable.ic_launcher_background);
+
+                deleteItem.setBackground(R.drawable.ic_launcher_background);
                 // add to menu
                 menu.addMenuItem(deleteItem);
 //                 m = (SwipeMenu) activityMainBinding.nav.getMenu();
@@ -200,7 +208,20 @@ public class MainActivity extends AppCompatActivity {
         activityMainBinding.listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                Log.e("TAG", "click ") ;
+                Log.e("TAG", "click ");
+                Fragment fragment = null;
+
+                String itemTitle = list.get(position);
+//                Intent intent = new Intent(MainActivity.this, TestFragment.class);
+                Bundle extras = new Bundle();
+                extras.putString("itemTitle", itemTitle);
+                fragment = new TestFragment();
+                fragment.setArguments(extras);
+
+                getSupportFragmentManager().beginTransaction().
+                        replace(R.id.main_fragment, fragment).commit();
+
+                activityMainBinding.drawer.closeDrawer(GravityCompat.START);
 
             }
         });
@@ -209,15 +230,16 @@ public class MainActivity extends AppCompatActivity {
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
                 switch (index) {
                     case 0:
-                        // open
-                        Log.e("TAG", "open log "+ index) ;
-
-                        break;
-                    case 1:
                         // delete
-                        Log.e("TAG", "delete log "+ index) ;
-
+                        Log.e("TAG", "delete log " + index);
+                        AlertDialog diaBox = ConfirmDeletion(position);
+                        diaBox.show();
                         break;
+//                    case 1:
+//                        // delete
+//                        Log.e("TAG", "delete log " + index);
+//
+//                        break;
                 }
                 // false : close the menu; true : not close the menu
                 return false;
@@ -235,14 +257,16 @@ public class MainActivity extends AppCompatActivity {
 
                 if (item.getItemId() == R.id.home) {
                     fragment = new HomeFragment();
-                } else {
-                    String itemTitle = (String) item.getTitle();
-//                Intent intent = new Intent(MainActivity.this, TestFragment.class);
-                    Bundle extras = new Bundle();
-                    extras.putString("itemTitle", itemTitle);
-                    fragment = new TestFragment();
-                    fragment.setArguments(extras);
                 }
+
+//                 else {
+//                    String itemTitle = (String) item.getTitle();
+////                Intent intent = new Intent(MainActivity.this, TestFragment.class);
+//                    Bundle extras = new Bundle();
+//                    extras.putString("itemTitle", itemTitle);
+//                    fragment = new TestFragment();
+//                    fragment.setArguments(extras);
+//                }
 
 //                startActivity(intent);
 //                switch (item.getItemId()) {
@@ -324,6 +348,15 @@ public class MainActivity extends AppCompatActivity {
     public static void createmenu() {
 //        AllToDoCategory = RoDatabase.getInstance(this).todoDao().getAllTodoCategory();
 
+        MainActivity.list.clear();
+        for (int i = 0; i < AllToDoCategory.size(); i++) {
+            String newMenuItem = AllToDoCategory.get(i).getCategoryName();
+            MainActivity.list.add(newMenuItem);
+
+        }
+        arrayAdapter.notifyDataSetChanged();
+
+
 //        if (MainActivity.menuItemsList.size() == 0) {
 //            MainActivity.menuItemsList.add("base");
 //        }
@@ -335,13 +368,14 @@ public class MainActivity extends AppCompatActivity {
         ;
 //        List<ToDoCategoryModel> toDoCategoryModels ;
 //        insertTodoCategory();
-        Menu menu = activityMainBinding.nav.getMenu();
-        menu.removeGroup(1);
-        for (int i = 0; i < AllToDoCategory.size(); i++) {
-            ToDoCategoryModel menuItem = AllToDoCategory.get(i);
-            menu.add(1, i, 0, menuItem.getCategoryName());
-//            Toast.makeText(this,AllToDoCategory.get(i).getCategoryName(), Toast.LENGTH_SHORT);
-        }
+//        Menu menu = activityMainBinding.nav.getMenu();
+//        menu.removeGroup(1);
+//        for (int i = 0; i < AllToDoCategory.size(); i++) {
+//            ToDoCategoryModel menuItem = AllToDoCategory.get(i);
+//            MainActivity.list.add(menuItem.getCategoryName());
+////            menu.add(1, i, 0, menuItem.getCategoryName());
+////            Toast.makeText(this,AllToDoCategory.get(i).getCategoryName(), Toast.LENGTH_SHORT);
+//        }
     }
 
 //    List<ToDoCategoryModel> AllToDoCategory = RoDatabase.getInstance(this).todoDao().getAllTodoCategory();
@@ -351,7 +385,7 @@ public class MainActivity extends AppCompatActivity {
 //        RoDatabase.getInstance(this).todoDao().insertTodoCategory(toDoCategoryModel);
 //    }
 
-    private AlertDialog ConfirmDeletion() {
+    private AlertDialog ConfirmDeletion(int pos) {
 
         AlertDialog alert = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.AlertDialogCustom))
                 .setTitle("حذف قسم")
@@ -359,8 +393,21 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton("حذف", new DatePickerDialog.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int whichButton) {
+                        RoDatabase.getInstance(this).todoDao().deleteAllRecordsWhere(list.get(pos));
+                        RoDatabase.getInstance(this).todoDao().deleteTodoCategoryWhere(list.get(pos));
 
+                        MainActivity.list.remove(pos);
+                        arrayAdapter.notifyDataSetChanged();
+                        if (HomeFragment.AllTodo.size() != 0) {
+                            HomeFragment.recyclerViewAdapter.notifyDataSetChanged();
+                        } else if (TestFragment.AllTodoWhereCategory.size() != 0) {
+                            TestFragment.recyclerViewAdapter.notifyDataSetChanged();
+                        }
+
+//                        createmenu();
                         dialog.dismiss();
+                        activityMainBinding.drawer.closeDrawer(GravityCompat.START);
+
                     }
 
                 })
@@ -369,6 +416,8 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
 
                         dialog.dismiss();
+                        activityMainBinding.drawer.closeDrawer(GravityCompat.START);
+
 
                     }
                 })
@@ -379,7 +428,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
 
 
 }

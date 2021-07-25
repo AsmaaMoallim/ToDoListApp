@@ -2,7 +2,6 @@ package com.alamat.todolistapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alamat.todolistapp.databinding.DisplayItemBinding;
@@ -25,15 +25,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
 
     List<ToDoModel> toDoModels;
-    List<ToDoModel> toDoModelCopy = new ArrayList<>()
-    ;
+    List<ToDoModel> toDoModelCopy = new ArrayList<>();
 
     static int updateElemId = -1;
     int pos;
     private final ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
 
     public void filter(String text) {
-        if (toDoModels != null){
+        if (toDoModels != null) {
             toDoModelCopy.clear();
             toDoModelCopy.addAll(toDoModels);
 
@@ -222,7 +221,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 //        }
     }
 
-//    private void deleteRecordWhere(int id) {
+    //    private void deleteRecordWhere(int id) {
 //        RoDatabase.getInstance(this).todoDao().deleteRecordWhere(id);
 //
 //        if (HomeFragment.AllTodo != null) {
@@ -235,4 +234,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 //
 ////                TestFragment.recyclerViewAdapter.notifyDataSetChanged();
 //    }
+
 }
+
+

@@ -2,6 +2,7 @@ package com.alamat.todolistapp;
 
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
@@ -29,8 +30,11 @@ public interface TodoDao {
     @Query("update todomodel set todoTitle = :newTitle , todoContect = :newContent where id = :id ")
     void update(String newTitle , String newContent , int id);
 
-    @Query("select * from todomodel where todoTitle = :key or todoContect = :key")
-    List<ToDoModel> search(String key);
+    @Query("delete from todomodel where todoCategory = :todoCategory")
+    void deleteAllRecordsWhere(String todoCategory);
+
+//    @Query("select * from todomodel where todoTitle = :key or todoContect = :key")
+//    List<ToDoModel> search(String key);
     //////////////////////////////////////////////////////////////////////////
 
     @Insert
@@ -38,6 +42,9 @@ public interface TodoDao {
 
     @Query("select * from toDoCategoryModel;")
     List<ToDoCategoryModel> getAllTodoCategory();
+
+    @Query("delete from toDoCategoryModel where CategoryName = :CategoryName")
+    void deleteTodoCategoryWhere(String CategoryName);
 
 }
 
