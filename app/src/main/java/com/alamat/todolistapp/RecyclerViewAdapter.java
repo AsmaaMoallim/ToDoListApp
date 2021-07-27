@@ -30,6 +30,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     static int updateElemId = -1;
     int pos;
     private final ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
+    OnItemClickListener onItemClickListener;
+
+    int itemView;
+
 
     public void filter(String text) {
         if (toDoModels != null) {
@@ -76,8 +80,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     }
 
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
     public RecyclerViewAdapter(List<ToDoModel> toDoModel) {
         this.toDoModels = toDoModel;
+        this.itemView = itemView;
 
 //        this.toDoModelCopy = toDoModel;
     }
@@ -100,6 +109,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull @NotNull RecyclerViewAdapter.SwipeViewHolder holder, int position) {
         ToDoModel toDoModel = toDoModels.get(position);
+//
 
         viewBinderHelper.setOpenOnlyOne(true);
         viewBinderHelper.bind(holder.displayItemBinding.swipeLayout, String.valueOf(toDoModel.getId()));
@@ -113,6 +123,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 //
 //            }
 //        });
+        if (onItemClickListener != null){
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemClickListener.onItemClick(position, toDoModel);
+                }
+            });
+        }
+
         holder.displayItemBinding.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -235,6 +254,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 ////                TestFragment.recyclerViewAdapter.notifyDataSetChanged();
 //    }
 
+    public interface OnItemClickListener {
+        void onItemClick(int pos, ToDoModel toDoModel);
+
+    }
 }
 
 

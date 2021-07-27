@@ -10,7 +10,19 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".InsertNewTodoActivity">
+        tools:context=".InsertNewTodoActivity"
+        android:background="#61EEDFFF">
+
+
+    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#DEC1FF"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="@string/app_name"
+
+            app:titleTextColor="@color/black" />
 
 
         <EditText
@@ -54,7 +66,7 @@
             android:layout_margin="30dp"
             android:background="@color/purple_200"
             android:gravity="center"
-            android:text="اضف مهمة جديدة"
+            android:text="اضافة"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="25sp"

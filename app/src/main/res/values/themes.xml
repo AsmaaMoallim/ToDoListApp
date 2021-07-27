@@ -3,10 +3,10 @@
     <style name="Theme.ToDoListApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">#9F5587</item>
-        <item name="colorPrimaryVariant">@color/purple_200</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">#FF65C1</item>
+        <item name="colorSecondary">#DEC1FF</item>
         <item name="colorSecondaryVariant">#C858E1</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
@@ -15,7 +15,7 @@
     </style>
 
 
-
+<!--    FFFF65C1-->
     <style name="AlertDialogCustom" parent="ThemeOverlay.AppCompat.Dialog.Alert">
         <item name="android:layoutDirection">rtl</item>
         <item name="android:textSize">20sp</item>

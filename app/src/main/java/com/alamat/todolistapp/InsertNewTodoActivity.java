@@ -1,8 +1,11 @@
 package com.alamat.todolistapp;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
@@ -12,13 +15,28 @@ import java.util.List;
 
 public class InsertNewTodoActivity extends AppCompatActivity {
 
+
     private ActivityInsertNewTodoBinding activityInsertNewTodoBinding;
     static ToDoModel updateingTodo;
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityInsertNewTodoBinding = DataBindingUtil.setContentView(InsertNewTodoActivity.this, R.layout.activity_insert_new_todo);
+
+
+        setSupportActionBar(activityInsertNewTodoBinding.toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         if (RecyclerViewAdapter.updateElemId != -1){
 

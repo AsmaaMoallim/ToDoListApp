@@ -9,14 +9,14 @@
         android:id="@+id/v_header_containerView"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background="#E1D3DF"
+        android:background="#F1E1FF"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imgv_header_applogo"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:background="@mipmap/applogo"
+        android:background="@mipmap/app_logo2"
         android:layout_margin="30dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -30,8 +30,7 @@
         android:gravity="left"
         android:text="ToDo_List App"
         android:textColor="@color/purple_700"
-        android:textSize="25sp"
-        android:textStyle="bold"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@id/imgv_header_applogo"
         app:layout_constraintTop_toBottomOf="@id/imgv_header_applogo" />
 </androidx.constraintlayout.widget.ConstraintLayout>
