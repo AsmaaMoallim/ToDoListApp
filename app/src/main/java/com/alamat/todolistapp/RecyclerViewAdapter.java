@@ -135,7 +135,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.displayItemBinding.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "delete cliked" + toDoModel.id, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(v.getContext(), "delete cliked" + toDoModel.id, Toast.LENGTH_SHORT).show();
 //                deleteRecordWhere(toDoModel.id);
                 RoDatabase.getInstance(this).todoDao().deleteRecordWhere(toDoModel.id);
 
