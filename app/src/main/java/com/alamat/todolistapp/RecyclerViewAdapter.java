@@ -36,8 +36,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void filter(String text) {
         toDoModels.clear();
 
-        toDoModelCopy = RoDatabase.getInstance(this).todoDao().search(text);
-        toDoModels.addAll(toDoModelCopy);
+        toDoModels = RoDatabase.getInstance(this).todoDao().search(text);
+//        toDoModels.addAll(toDoModelCopy);
 
         notifyDataSetChanged();
 
@@ -111,6 +111,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         DisplayItemBinding displayItemBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.display_item, parent, false);
         return new SwipeViewHolder(displayItemBinding);
     }
+
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull RecyclerViewAdapter.SwipeViewHolder holder, int position) {
