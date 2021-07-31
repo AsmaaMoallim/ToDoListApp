@@ -59,9 +59,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 Log.e("TAG", "onQueryTextSubmit log");
-                if (HomeFragment.AllTodo.size() != 0) {
+                if (HomeFragment.AllTodo != null) {
                     HomeFragment.recyclerViewAdapter.filter(query);
-                } else if (TestFragment.AllTodoWhereCategory.size() != 0) {
+                } else if (TestFragment.AllTodoWhereCategory != null) {
                     TestFragment.recyclerViewAdapter.filter(query);
                 }
 //                searchedList = RoDatabase.getInstance(this).todoDao().search(query);
@@ -74,9 +74,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 Log.e("TAG", "onQueryTextChange log");
-                if (HomeFragment.AllTodo.size() != 0) {
+                if (HomeFragment.AllTodo != null) {
                     HomeFragment.recyclerViewAdapter.filter(newText);
-                } else if (TestFragment.AllTodoWhereCategory.size() != 0) {
+                } else if (TestFragment.AllTodoWhereCategory != null) {
                     TestFragment.recyclerViewAdapter.filter(newText);
                 }//                TestFragment.recyclerViewAdapter.filter(newText);
 

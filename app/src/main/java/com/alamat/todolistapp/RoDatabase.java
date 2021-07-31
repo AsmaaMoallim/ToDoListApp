@@ -47,6 +47,16 @@ public abstract class RoDatabase extends RoomDatabase {
         return roomDataBase;
     }
 
+    public static RoDatabase getInstance(RecyclerViewAdapter recyclerViewAdapter) {
+        if (roomDataBase == null){
+            roomDataBase = Room.databaseBuilder(context , RoDatabase.class,DBName)
+                    .allowMainThreadQueries()
+                    .fallbackToDestructiveMigration()
+                    .build();
+        }
+        return roomDataBase;
+    }
+
     public abstract TodoDao todoDao();
 
     public static RoDatabase getInstance(Context context){

@@ -33,8 +33,8 @@ public interface TodoDao {
     @Query("delete from todomodel where todoCategory = :todoCategory")
     void deleteAllRecordsWhere(String todoCategory);
 
-//    @Query("select * from todomodel where todoTitle = :key or todoContect = :key")
-//    List<ToDoModel> search(String key);
+    @Query("select * from todomodel where todoTitle like '%' || :key || '%' or todoContect like '%' || :key || '%'")
+    List<ToDoModel> search(String key);
     //////////////////////////////////////////////////////////////////////////
 
     @Insert

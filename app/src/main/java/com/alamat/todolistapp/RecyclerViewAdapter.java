@@ -5,11 +5,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alamat.todolistapp.databinding.DisplayItemBinding;
@@ -36,47 +34,54 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
 
     public void filter(String text) {
-        if (toDoModels != null) {
-            toDoModelCopy.clear();
-            toDoModelCopy.addAll(toDoModels);
+        toDoModels.clear();
 
-//        toDoModelCopy.removeAll(toDoModels);
-//        Log.e("Tag", " 11");
-//        toDoModelCopy.addAll(toDoModels);
-//        Log.e("Tag", "22 toDoModels " + toDoModels.get(0).todoTitle);
-//        Log.e("Tag", "22 toDoModelCopy " + toDoModelCopy.get(0).todoTitle);
+        toDoModelCopy = RoDatabase.getInstance(this).todoDao().search(text);
+        toDoModels.addAll(toDoModelCopy);
 
+        notifyDataSetChanged();
 
-//        for(ToDoModel item: toDoModels){
-//            toDoModelCopy.add(item);
-//            Log.e("Tag", item.todoTitle);
-//        }
-
-            //        RecyclerViewAdapter.toDoModelCopy.addAll(toDoModels);
-
-            toDoModels.clear();
-            if (text.isEmpty()) {
-//            toDoModels.removeAll(toDoModels);
-//            for (ToDoModel item : toDoModelCopy) {
-//                toDoModels.add(item);
+//        if (toDoModels != null) {
+//            toDoModelCopy.clear();
+//            toDoModelCopy.addAll(toDoModels);
+//
+////        toDoModelCopy.removeAll(toDoModels);
+////        Log.e("Tag", " 11");
+////        toDoModelCopy.addAll(toDoModels);
+////        Log.e("Tag", "22 toDoModels " + toDoModels.get(0).todoTitle);
+////        Log.e("Tag", "22 toDoModelCopy " + toDoModelCopy.get(0).todoTitle);
+//
+//
+////        for(ToDoModel item: toDoModels){
+////            toDoModelCopy.add(item);
+////            Log.e("Tag", item.todoTitle);
+////        }
+//
+//            //        RecyclerViewAdapter.toDoModelCopy.addAll(toDoModels);
+//
+//            toDoModels.clear();
+//            if (text.isEmpty()) {
+////            toDoModels.removeAll(toDoModels);
+////            for (ToDoModel item : toDoModelCopy) {
+////                toDoModels.add(item);
+////            }
+//                toDoModels.addAll(toDoModelCopy);
+////            Log.e("Tag", "44 toDoModels " + toDoModels.get(0).todoTitle);
+////            Log.e("Tag", "44 toDoModelCopy " + toDoModelCopy.get(0).todoTitle);
+//
+//            } else {
+//                text = text.toLowerCase();
+//                for (ToDoModel item : toDoModelCopy) {
+////                Log.e("Tag", "else " + toDoModelCopy.get(0).todoTitle);
+//
+//                    if (item.todoTitle.toLowerCase().contains(text) || item.todoContect.toLowerCase().contains(text)) {
+//                        toDoModels.add(item);
+//                    }
+//                }
 //            }
-                toDoModels.addAll(toDoModelCopy);
-//            Log.e("Tag", "44 toDoModels " + toDoModels.get(0).todoTitle);
-//            Log.e("Tag", "44 toDoModelCopy " + toDoModelCopy.get(0).todoTitle);
-
-            } else {
-                text = text.toLowerCase();
-                for (ToDoModel item : toDoModelCopy) {
-//                Log.e("Tag", "else " + toDoModelCopy.get(0).todoTitle);
-
-                    if (item.todoTitle.toLowerCase().contains(text) || item.todoContect.toLowerCase().contains(text)) {
-                        toDoModels.add(item);
-                    }
-                }
-            }
-//        toDoModelCopy.clear();
-            notifyDataSetChanged();
-        }
+////        toDoModelCopy.clear();
+//            notifyDataSetChanged();
+//        }
 
     }
 
@@ -84,6 +89,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
+
     public RecyclerViewAdapter(List<ToDoModel> toDoModel) {
         this.toDoModels = toDoModel;
         this.itemView = itemView;
@@ -123,7 +129,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 //
 //            }
 //        });
-        if (onItemClickListener != null){
+        if (onItemClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
