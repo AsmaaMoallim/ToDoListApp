@@ -73,4 +73,9 @@ dependencies {
     //search
 //    implementation 'android.support.v7.widget.SearchView:*'
 //    implementation 'androidx.appcompat.widget.SearchView:*'
+
+
+    //card view
+    implementation "androidx.cardview:cardview:1.0.0"
+
 }

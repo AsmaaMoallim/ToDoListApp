@@ -2,6 +2,7 @@ package com.alamat.todolistapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -138,10 +139,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 }
             });
         }
+        holder.displayItemBinding.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("TAG", "onClick: "+ position);
+
+            }
+        });
 
         holder.displayItemBinding.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.e("TAG", "onClick: "+ position);
+
 //                Toast.makeText(v.getContext(), "delete cliked" + toDoModel.id, Toast.LENGTH_SHORT).show();
 //                deleteRecordWhere(toDoModel.id);
                 RoDatabase.getInstance(this).todoDao().deleteRecordWhere(toDoModel.id);
@@ -162,6 +172,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.displayItemBinding.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.e("TAG", "onClick: "+ position);
 
                 updateElemId = toDoModel.getId();
                 Intent intent = new Intent(v.getContext(), InsertNewTodoActivity.class);
