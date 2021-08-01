@@ -1,19 +1,25 @@
-package com.alamat.todolistapp;
+package com.alamat.todolistapp.activities_fragments;
 
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import com.alamat.todolistapp.R;
 import com.alamat.todolistapp.databinding.ActivityCreateNewMenuItemBinding;
+import com.alamat.todolistapp.models.ToDoCategoryModel;
+import com.alamat.todolistapp.roomDatabase.RoDatabase;
 
 
 public class Create_new_menu_Item_Activity extends AppCompatActivity {
 
     private ActivityCreateNewMenuItemBinding activityCreateNewMenuItemBinding;
+
+    // go back on action bar
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -23,6 +29,7 @@ public class Create_new_menu_Item_Activity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +37,7 @@ public class Create_new_menu_Item_Activity extends AppCompatActivity {
         activityCreateNewMenuItemBinding = DataBindingUtil.setContentView(Create_new_menu_Item_Activity.this, R.layout.activity_create_new_menu_item);
 
 
+        // action bar
         setSupportActionBar(activityCreateNewMenuItemBinding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -37,26 +45,32 @@ public class Create_new_menu_Item_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
+                // insert and fetch new database ToDoCategory data
                 insertTodoCategory();
                 MainActivity.AllToDoCategory = RoDatabase.getInstance(getBaseContext()).todoDao().getAllTodoCategory();
 
-//                MainActivity.menuItemsList.add(activityCreateNewMenuItemBinding.etMenuItemTitle.getText().toString());
-//                MainActivity obj = new MainActivity();
-//                obj.createmenu();
+                // recreate menu and notify data changed
                 MainActivity.createmenu();
                 MainActivity.arrayAdapter.notifyDataSetChanged();
-
-                //                Menu newMenu= activityMainBinding.nav.getMenu();
-//                newMenu.add(0, 0, 0, activityCreateNewMenuItemBinding.etMenuItemTitle.getText());
                 finish();
             }
         });
 
     }
 
+
     public void insertTodoCategory() {
-        ToDoCategoryModel toDoCategoryModel = new ToDoCategoryModel(activityCreateNewMenuItemBinding.etMenuItemTitle.getText().toString());
-        RoDatabase.getInstance(this).todoDao().insertTodoCategory(toDoCategoryModel);
+        try {
+            ToDoCategoryModel toDoCategoryModel = new
+                    ToDoCategoryModel(activityCreateNewMenuItemBinding.etMenuItemTitle.getText().toString());
+            RoDatabase.getInstance(this).todoDao().insertTodoCategory(toDoCategoryModel);
+
+        } catch (android.database.sqlite.SQLiteConstraintException e) {
+//            Log.e("TAG", "Catch");
+
+            Toast.makeText(getApplicationContext(),
+                    "لديك قسم آخر بنفس الاسم مسبقًا، حاول مرة اخرى",Toast.LENGTH_SHORT)
+                    .show();;
+        }
     }
 }

@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".Create_new_menu_Item_Activity"
+        tools:context=".activities_fragments.Create_new_menu_Item_Activity"
         android:background="@color/MainBackground">
 
 

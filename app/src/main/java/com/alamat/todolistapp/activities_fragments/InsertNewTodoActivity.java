@@ -1,23 +1,26 @@
-package com.alamat.todolistapp;
+package com.alamat.todolistapp.activities_fragments;
 
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import com.alamat.todolistapp.R;
 import com.alamat.todolistapp.databinding.ActivityInsertNewTodoBinding;
+import com.alamat.todolistapp.models.ToDoModel;
+import com.alamat.todolistapp.roomDatabase.RoDatabase;
 
-import java.util.List;
 
 public class InsertNewTodoActivity extends AppCompatActivity {
 
 
     private ActivityInsertNewTodoBinding activityInsertNewTodoBinding;
     static ToDoModel updateingTodo;
+
+    // go back on action bar
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -34,10 +37,12 @@ public class InsertNewTodoActivity extends AppCompatActivity {
         activityInsertNewTodoBinding = DataBindingUtil.setContentView(InsertNewTodoActivity.this, R.layout.activity_insert_new_todo);
 
 
+        // action bar
         setSupportActionBar(activityInsertNewTodoBinding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
+        // updating
         if (RecyclerViewAdapter.updateElemId != -1){
 
             updateingTodo = RoDatabase.getInstance(this).todoDao().getOneTodoWhereCategory(RecyclerViewAdapter.updateElemId);
@@ -58,6 +63,8 @@ public class InsertNewTodoActivity extends AppCompatActivity {
                 }
             });
         }
+
+        // inserting new
         else {
             activityInsertNewTodoBinding.btnAddTsak.setOnClickListener(new View.OnClickListener() {
                 @Override

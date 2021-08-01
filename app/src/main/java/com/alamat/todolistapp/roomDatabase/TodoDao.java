@@ -1,11 +1,12 @@
-package com.alamat.todolistapp;
+package com.alamat.todolistapp.roomDatabase;
 
 
 import androidx.room.Dao;
-import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
+import com.alamat.todolistapp.models.ToDoCategoryModel;
+import com.alamat.todolistapp.models.ToDoModel;
 
 import java.util.List;
 
@@ -28,7 +29,7 @@ public interface TodoDao {
     ToDoModel getOneTodoWhereCategory(int id);
 
     @Query("update todomodel set todoTitle = :newTitle , todoContect = :newContent where id = :id ")
-    void update(String newTitle , String newContent , int id);
+    void update(String newTitle, String newContent, int id);
 
     @Query("delete from todomodel where todoCategory = :todoCategory")
     void deleteAllRecordsWhere(String todoCategory);

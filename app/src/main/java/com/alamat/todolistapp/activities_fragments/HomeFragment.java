@@ -1,19 +1,19 @@
-package com.alamat.todolistapp;
+package com.alamat.todolistapp.activities_fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alamat.todolistapp.R;
 import com.alamat.todolistapp.databinding.FragmentHomeBinding;
+import com.alamat.todolistapp.models.ToDoModel;
+import com.alamat.todolistapp.roomDatabase.RoDatabase;
 
 import java.util.List;
 
@@ -38,7 +38,6 @@ public class HomeFragment extends Fragment {
         recyclerViewAdapter = new RecyclerViewAdapter(null);
         fragmentHomeBinding.recyclerView.setLayoutManager(layoutManager);
         fragmentHomeBinding.recyclerView.setAdapter(recyclerViewAdapter);
-//
 
 
         view = fragmentHomeBinding.getRoot();
@@ -48,19 +47,12 @@ public class HomeFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-//        if (AllTodo != null){
-//            AllTodo.clear();
-//        }
+
         AllTodo = RoDatabase.getInstance(getContext()).todoDao().getAllTodo();
         recyclerViewAdapter = new RecyclerViewAdapter(AllTodo);
         fragmentHomeBinding.recyclerView.setAdapter(recyclerViewAdapter);
 
-        recyclerViewAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int pos, ToDoModel toDoModel) {
 
-            }
-        });
     }
 
     @Override
