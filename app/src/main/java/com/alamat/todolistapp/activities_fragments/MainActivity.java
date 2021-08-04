@@ -78,15 +78,10 @@ public class MainActivity extends AppCompatActivity {
         createmenu();
 
 
-        // swipe action direction
-        // Left
-        // activityMainBinding.listView.setSwipeDirection(SwipeMenuListView.DIRECTION_LEFT);
-        // Right
-        activityMainBinding.listView.setSwipeDirection(SwipeMenuListView.DIRECTION_RIGHT);
-
 
         // ArrayAdapter for the listview + setting the adapter
-        arrayAdapter = new ArrayAdapter(MainActivity.this, R.layout.menu_item_style, list);
+        arrayAdapter = new ArrayAdapter(MainActivity.this,
+                R.layout.menu_item_style, list);
         activityMainBinding.listView.setAdapter(arrayAdapter);
 
         // creation of the swipe menu item
@@ -95,8 +90,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void create(SwipeMenu menu) {
                 // create "delete" item
-                SwipeMenuItem deleteItem = new SwipeMenuItem(
-                        getApplicationContext());
+                SwipeMenuItem deleteItem = new SwipeMenuItem(getApplicationContext());
                 deleteItem.setBackground(new ColorDrawable(Color.rgb(0xF9,
                         0x3F, 0x25)));
                 deleteItem.setWidth(250);
@@ -105,11 +99,19 @@ public class MainActivity extends AppCompatActivity {
                 deleteItem.setTitleColor(Color.WHITE);
                 // add to menu
                 menu.addMenuItem(deleteItem);
+
             }
         };
 
+
         // set creator
         activityMainBinding.listView.setMenuCreator(creator);
+
+        // swipe action direction
+        // Left
+        // activityMainBinding.listView.setSwipeDirection(SwipeMenuListView.DIRECTION_LEFT);
+        // Right
+        activityMainBinding.listView.setSwipeDirection(SwipeMenuListView.DIRECTION_RIGHT);
 
 
         // setting listener of clicking listview items
@@ -137,7 +139,8 @@ public class MainActivity extends AppCompatActivity {
         activityMainBinding.listView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
-                if (index == 0) {// delete
+                if (index == 0) {
+                    // delete
                     Log.e("TAG", "delete log " + index);
                     AlertDialog diaBox = ConfirmDeletion(position);
                     diaBox.show();
@@ -246,10 +249,11 @@ public class MainActivity extends AppCompatActivity {
                         // delete the category itself
                         RoDatabase.getInstance(this).todoDao().deleteTodoCategoryWhere(list.get(pos));
 
+                        // delete this category form the listview
                         MainActivity.list.remove(pos);
                         arrayAdapter.notifyDataSetChanged();
 
-                        // Main fragment
+                        // Main fragment / update recycler view
                         if (HomeFragment.AllTodo.size() != 0) {
                             HomeFragment.AllTodo.clear();
                             List<ToDoModel> AllTodo= RoDatabase.getInstance(this).todoDao().getAllTodo();
@@ -258,9 +262,8 @@ public class MainActivity extends AppCompatActivity {
 
 
                         }
-                        // General fragment
+                        // General fragment / update recycler view
                         else if (TestFragment.AllTodoWhereCategory.size() != 0) {
-
                             TestFragment.AllTodoWhereCategory.clear();
                             List<ToDoModel> AllTodoWhereCategory= RoDatabase.getInstance(this).todoDao().getAllTodo();
                             TestFragment.AllTodoWhereCategory.addAll(AllTodoWhereCategory);

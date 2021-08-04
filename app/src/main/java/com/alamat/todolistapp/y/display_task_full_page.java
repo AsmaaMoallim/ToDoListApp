@@ -1,8 +1,10 @@
-package com.alamat.todolistapp;
+package com.alamat.todolistapp.y;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.alamat.todolistapp.R;
 
 public class display_task_full_page extends AppCompatActivity {
 

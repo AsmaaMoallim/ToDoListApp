@@ -1,4 +1,4 @@
-package com.alamat.todolistapp;
+package com.alamat.todolistapp.y;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.alamat.todolistapp.databinding.ActivityDisplayBinding;
 
 import java.util.List;
 

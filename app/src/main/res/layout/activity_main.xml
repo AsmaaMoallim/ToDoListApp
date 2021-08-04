@@ -42,7 +42,6 @@
                 app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -56,24 +55,20 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar_container"
-            app:menu="@menu/nav_drawer_menu"
-            >
+            app:menu="@menu/nav_drawer_menu">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="260dp"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
 
                 <com.baoyz.swipemenulistview.SwipeMenuListView
                     android:id="@+id/listView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
-                    app:layout_constraintTop_toBottomOf="@menu/nav_drawer_menu"
-                    />
+                    app:layout_constraintTop_toBottomOf="@menu/nav_drawer_menu" />
 
 
             </LinearLayout>
@@ -89,9 +84,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_baseline_add_24" />
 
-            </com.google.android.material.navigation.NavigationView>
-
-
+        </com.google.android.material.navigation.NavigationView>
 
 
     </androidx.drawerlayout.widget.DrawerLayout>

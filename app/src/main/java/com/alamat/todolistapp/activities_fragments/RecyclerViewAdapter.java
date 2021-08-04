@@ -28,6 +28,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     List<ToDoModel> toDoModels;
 
     static int updateElemId = -1;
+
     private final ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
 
 
@@ -49,7 +50,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @NotNull
     @Override
     public SwipeViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        DisplayItemBinding displayItemBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.display_item, parent, false);
+        DisplayItemBinding displayItemBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
+                R.layout.display_item, parent, false);
         return new SwipeViewHolder(displayItemBinding);
     }
 
@@ -86,6 +88,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 if (HomeFragment.AllTodo.size() != 0) {
                     HomeFragment.AllTodo.remove(position);
                     HomeFragment.recyclerViewAdapter.notifyDataSetChanged();
+
                 } else if (TestFragment.AllTodoWhereCategory.size() != 0) {
                     TestFragment.AllTodoWhereCategory.remove(position);
                     TestFragment.recyclerViewAdapter.notifyDataSetChanged();
@@ -131,11 +134,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     class SwipeViewHolder extends RecyclerView.ViewHolder {
         DisplayItemBinding displayItemBinding;
 
-        public SwipeViewHolder(@NonNull DisplayItemBinding itemView) {
-            super(itemView.getRoot());
-            this.displayItemBinding = itemView;
+        public SwipeViewHolder(@NonNull DisplayItemBinding displayItemBinding) {
+            super(displayItemBinding.getRoot());
+            this.displayItemBinding = displayItemBinding;
 
         }
+
     }
 }
 

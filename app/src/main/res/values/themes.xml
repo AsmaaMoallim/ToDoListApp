@@ -15,7 +15,7 @@
     </style>
 
 
-<!--    FFFF65C1-->
+<!--    AlertDialogCustomStyle-->
     <style name="AlertDialogCustom" parent="ThemeOverlay.AppCompat.Dialog.Alert">
         <item name="android:layoutDirection">rtl</item>
         <item name="android:textSize">20sp</item>

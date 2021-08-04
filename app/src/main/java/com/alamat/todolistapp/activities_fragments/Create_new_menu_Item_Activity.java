@@ -1,5 +1,6 @@
 package com.alamat.todolistapp.activities_fragments;
 
+import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -65,7 +66,7 @@ public class Create_new_menu_Item_Activity extends AppCompatActivity {
                     ToDoCategoryModel(activityCreateNewMenuItemBinding.etMenuItemTitle.getText().toString());
             RoDatabase.getInstance(this).todoDao().insertTodoCategory(toDoCategoryModel);
 
-        } catch (android.database.sqlite.SQLiteConstraintException e) {
+        } catch (SQLiteConstraintException e) {
 //            Log.e("TAG", "Catch");
 
             Toast.makeText(getApplicationContext(),

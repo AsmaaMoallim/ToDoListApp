@@ -13,6 +13,7 @@ import java.util.List;
 @Dao
 public interface TodoDao {
 
+    ///////// ToDoModel operations
     @Insert
     void insertTodo(ToDoModel toDoModel);
 
@@ -36,7 +37,8 @@ public interface TodoDao {
 
     @Query("select * from todomodel where todoTitle like '%' || :key || '%' or todoContect like '%' || :key || '%'")
     List<ToDoModel> search(String key);
-    //////////////////////////////////////////////////////////////////////////
+
+    ///////// ToDoCategoryModel operations
 
     @Insert
     void insertTodoCategory(ToDoCategoryModel toDoCategoryModel);
