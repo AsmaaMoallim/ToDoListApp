@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SplashActivity"
-    android:background="@color/MainBackground">
+    android:background="@mipmap/splash_background2"
+    android:backgroundTintMode="src_atop"
+    >
 
 
     <ImageView
@@ -27,7 +29,8 @@
         android:text="To Do List App"
         android:gravity="center"
         app:layout_constraintTop_toBottomOf="@+id/app_logo"
-        android:textColor="@color/purple_700"
+        android:textColor="@color/purple_500"
+        android:background="#C9EBCBED"
         android:textSize="40sp"
         android:layout_marginTop="60dp"
         />
