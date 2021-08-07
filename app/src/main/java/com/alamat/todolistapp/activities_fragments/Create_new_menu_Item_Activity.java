@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -64,12 +65,20 @@ public class Create_new_menu_Item_Activity extends AppCompatActivity {
             activityCreateNewMenuItemBinding.btnAddNewMenuItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    RoDatabase.getInstance(this).todoDao().updateAllRecordsWhere(updateMenue, activityCreateNewMenuItemBinding.etMenuItemTitle.getText().toString());
-                    RoDatabase.getInstance(this).todoDao().updateTodoCategory(updateMenue, activityCreateNewMenuItemBinding.etMenuItemTitle.getText().toString());
-                    finish();
-                    MainActivity.updateMenue = null;
-                    MainActivity.list.set(getIntent().getExtras().getInt("listPos"), activityCreateNewMenuItemBinding.etMenuItemTitle.getText().toString());
-                    MainActivity.arrayAdapter.notifyDataSetChanged();
+                    activityCreateNewMenuItemBinding.etMenuItemTitle.onEditorAction(EditorInfo.IME_ACTION_DONE);
+                    if(activityCreateNewMenuItemBinding.etMenuItemTitle.getText().toString().trim().isEmpty()){
+                        Toast.makeText(getApplicationContext(),
+                                "سجل اسم القسم الجديد ليتم اضافته", Toast.LENGTH_SHORT)
+                                .show();
+                    }else {
+                        RoDatabase.getInstance(this).todoDao().updateAllRecordsWhere(updateMenue, activityCreateNewMenuItemBinding.etMenuItemTitle.getText().toString());
+                        RoDatabase.getInstance(this).todoDao().updateTodoCategory(updateMenue, activityCreateNewMenuItemBinding.etMenuItemTitle.getText().toString());
+                        finish();
+                        MainActivity.updateMenue = null;
+                        MainActivity.list.set(getIntent().getExtras().getInt("listPos"), activityCreateNewMenuItemBinding.etMenuItemTitle.getText().toString());
+                        MainActivity.arrayAdapter.notifyDataSetChanged();
+                    }
+
                 }
             });
         } else {
@@ -77,14 +86,23 @@ public class Create_new_menu_Item_Activity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
-                    // insert and fetch new database ToDoCategory data
-                    insertTodoCategory();
-                    MainActivity.AllToDoCategory = RoDatabase.getInstance(getBaseContext()).todoDao().getAllTodoCategory();
+                    activityCreateNewMenuItemBinding.etMenuItemTitle.onEditorAction(EditorInfo.IME_ACTION_DONE);
 
-                    // recreate menu and notify data changed
-                    MainActivity.createmenu();
-                    MainActivity.arrayAdapter.notifyDataSetChanged();
-                    finish();
+                    if(activityCreateNewMenuItemBinding.etMenuItemTitle.getText().toString().trim().isEmpty()){
+                        Toast.makeText(getApplicationContext(),
+                                "سجل اسم القسم الجديد ليتم اضافته", Toast.LENGTH_SHORT)
+                                .show();
+                    }else {
+                        // insert and fetch new database ToDoCategory data
+                        insertTodoCategory();
+                        MainActivity.AllToDoCategory = RoDatabase.getInstance(getBaseContext()).todoDao().getAllTodoCategory();
+
+                        // recreate menu and notify data changed
+                        MainActivity.createmenu();
+                        MainActivity.arrayAdapter.notifyDataSetChanged();
+                        finish();
+                    }
+
                 }
             });
         }
@@ -105,7 +123,7 @@ public class Create_new_menu_Item_Activity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),
                     "لديك قسم آخر بنفس الاسم مسبقًا، حاول مرة اخرى", Toast.LENGTH_SHORT)
                     .show();
-            ;
+
         }
     }
 }

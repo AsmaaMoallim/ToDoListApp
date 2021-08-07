@@ -3,6 +3,8 @@ package com.alamat.todolistapp.activities_fragments;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,9 +43,16 @@ public class InsertNewTodoActivity extends AppCompatActivity {
         setSupportActionBar(activityInsertNewTodoBinding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
+//        if(activityInsertNewTodoBinding.etTaskTitle.getText().toString().trim().isEmpty()
+//        || activityInsertNewTodoBinding.etTaskTitle.getText().toString().trim().isEmpty()) {
+//            Toast.makeText(getApplicationContext(),
+//                    "لا يمكن تسجيل قيم فارغة", Toast.LENGTH_SHORT)
+//                    .show();
+//        }
+//        else {
+//
         // updating
-        if (RecyclerViewAdapter.updateElemId != -1){
+        if (RecyclerViewAdapter.updateElemId != -1) {
 
             updateingTodo = RoDatabase.getInstance(this).todoDao().getOneTodoWhereCategory(RecyclerViewAdapter.updateElemId);
 
@@ -54,11 +63,23 @@ public class InsertNewTodoActivity extends AppCompatActivity {
             activityInsertNewTodoBinding.btnAddTsak.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    RoDatabase.getInstance(this).todoDao().update(activityInsertNewTodoBinding.etTaskTitle.getText().toString(),
-                            activityInsertNewTodoBinding.etTaskContent.getText().toString(),
-                            RecyclerViewAdapter.updateElemId);
-                    finish();
-                    RecyclerViewAdapter.updateElemId = -1;
+
+                    if (activityInsertNewTodoBinding.etTaskTitle.getText().toString().trim().isEmpty()
+                            || activityInsertNewTodoBinding.etTaskTitle.getText().toString().trim().isEmpty()) {
+                        Toast.makeText(getApplicationContext(),
+                                "لا يمكن تسجيل قيم فارغة", Toast.LENGTH_SHORT)
+                                .show();
+                    } else {
+                        activityInsertNewTodoBinding.etTaskTitle.onEditorAction(EditorInfo.IME_ACTION_DONE);
+                        activityInsertNewTodoBinding.etTaskContent.onEditorAction(EditorInfo.IME_ACTION_DONE);
+
+                        RoDatabase.getInstance(this).todoDao().update(activityInsertNewTodoBinding.etTaskTitle.getText().toString(),
+                                activityInsertNewTodoBinding.etTaskContent.getText().toString(),
+                                RecyclerViewAdapter.updateElemId);
+                        finish();
+                        RecyclerViewAdapter.updateElemId = -1;
+                    }
+
 
                 }
             });
@@ -69,12 +90,24 @@ public class InsertNewTodoActivity extends AppCompatActivity {
             activityInsertNewTodoBinding.btnAddTsak.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    insertTodo();
-                    finish();
+
+                    if (activityInsertNewTodoBinding.etTaskTitle.getText().toString().trim().isEmpty()
+                            || activityInsertNewTodoBinding.etTaskTitle.getText().toString().trim().isEmpty()) {
+                        Toast.makeText(getApplicationContext(),
+                                "لا يمكن تسجيل قيم فارغة", Toast.LENGTH_SHORT)
+                                .show();
+                    } else {
+                        activityInsertNewTodoBinding.etTaskTitle.onEditorAction(EditorInfo.IME_ACTION_DONE);
+                        activityInsertNewTodoBinding.etTaskContent.onEditorAction(EditorInfo.IME_ACTION_DONE);
+
+                        insertTodo();
+                        finish();
+                    }
+
                 }
             });
-        }
 
+        }
     }
 
     private void insertTodo() {
