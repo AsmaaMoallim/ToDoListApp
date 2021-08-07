@@ -85,11 +85,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                 RoDatabase.getInstance(this).todoDao().deleteRecordWhere(toDoModel.getId());
 
-                if (HomeFragment.AllTodo.size() != 0) {
+                if (MainActivity.currentFragment == 1) {
                     HomeFragment.AllTodo.remove(position);
                     HomeFragment.recyclerViewAdapter.notifyDataSetChanged();
 
-                } else if (TestFragment.AllTodoWhereCategory.size() != 0) {
+                } else if (MainActivity.currentFragment == 2) {
                     TestFragment.AllTodoWhereCategory.remove(position);
                     TestFragment.recyclerViewAdapter.notifyDataSetChanged();
                 }

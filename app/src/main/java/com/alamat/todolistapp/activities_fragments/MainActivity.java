@@ -282,7 +282,7 @@ public class MainActivity extends AppCompatActivity {
                         arrayAdapter.notifyDataSetChanged();
 
                         // Main fragment / update recycler view
-                        if (HomeFragment.AllTodo.size() != 0) {
+                        if (currentFragment == 1) {
                             HomeFragment.AllTodo.clear();
                             List<ToDoModel> AllTodo= RoDatabase.getInstance(this).todoDao().getAllTodo();
                             HomeFragment.AllTodo.addAll(AllTodo);
@@ -291,7 +291,7 @@ public class MainActivity extends AppCompatActivity {
 
                         }
                         // General fragment / update recycler view
-                        else if (TestFragment.AllTodoWhereCategory.size() != 0) {
+                        else if (currentFragment == 2) {
                             TestFragment.AllTodoWhereCategory.clear();
                             List<ToDoModel> AllTodoWhereCategory= RoDatabase.getInstance(this).todoDao().getAllTodo();
                             TestFragment.AllTodoWhereCategory.addAll(AllTodoWhereCategory);
