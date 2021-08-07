@@ -12,15 +12,16 @@
 
     <ImageView
         android:id="@+id/app_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="200dp"
         app:layout_constraintStart_toStartOf="parent"
         android:src="@mipmap/app_logo2"
-        android:scaleX="1.5"
-        android:scaleY="1.5"
+        android:layout_marginBottom="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:scaleX=".8"
+        android:scaleY=".8"
         />
     
     <TextView
@@ -28,11 +29,12 @@
         android:layout_height="wrap_content"
         android:text="To Do List App"
         android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@+id/app_logo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:textColor="@color/purple_500"
         android:background="#C9EBCBED"
         android:textSize="40sp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="400dp"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
