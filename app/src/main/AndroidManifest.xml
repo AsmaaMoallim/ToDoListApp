@@ -9,11 +9,10 @@
         android:roundIcon="@mipmap/app_logo2"
         android:supportsRtl="true"
         android:theme="@style/Theme.ToDoListApp">
-        <activity android:name=".y.display_task_full_page"></activity>
+        <activity android:name=".activities_fragments.MainActivity"></activity>
         <activity android:name=".activities_fragments.InsertNewTodoActivity" />
         <activity android:name=".activities_fragments.Create_new_menu_Item_Activity" />
-        <activity android:name=".y.DisplayActivity" />
-        <activity android:name=".activities_fragments.MainActivity">
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

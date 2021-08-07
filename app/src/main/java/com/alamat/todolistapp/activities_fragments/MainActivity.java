@@ -48,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
     static ArrayList<String> list = new ArrayList<>();
     static ArrayAdapter arrayAdapter;
 
+    static String updateMenue = null;
+    static int currentFragment = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,9 +98,18 @@ public class MainActivity extends AppCompatActivity {
                 deleteItem.setWidth(250);
                 deleteItem.setTitle("حذف");
                 deleteItem.setTitleSize(16);
-                deleteItem.setTitleColor(Color.WHITE);
+                deleteItem.setTitleColor(Color.BLACK);
                 // add to menu
                 menu.addMenuItem(deleteItem);
+
+                SwipeMenuItem dupdateItem = new SwipeMenuItem(getApplicationContext());
+                dupdateItem.setBackground(new ColorDrawable(Color.GREEN));
+                dupdateItem.setWidth(250);
+                dupdateItem.setTitle("تعديل");
+                dupdateItem.setTitleSize(16);
+                dupdateItem.setTitleColor(Color.BLACK);
+                // add to menu
+                menu.addMenuItem(dupdateItem);
 
             }
         };
@@ -120,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.e("TAG", "click ");
                 Fragment fragment = null;
+                currentFragment = 2;
 
                 String itemTitle = list.get(position);
                 Bundle extras = new Bundle();
@@ -146,6 +158,19 @@ public class MainActivity extends AppCompatActivity {
                     diaBox.show();
 
                 }
+                else if (index == 1){
+                    // update
+                    Log.e("TAG", "update log " + index);
+                    updateMenue = list.get(position);
+                    int listPos =position ;
+
+                    Intent intent = new Intent(getApplicationContext(), Create_new_menu_Item_Activity.class);
+//                    Bundle extras = new Bundle();
+                    intent.putExtra("updateMenue", updateMenue);
+                    intent.putExtra("listPos", listPos);
+
+                    startActivity(intent);
+                }
                 return false;
             }
         });
@@ -159,6 +184,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
                 if (item.getItemId() == R.id.home) {
+                    currentFragment = 1;
                     fragment = new HomeFragment();
                 }
                 getSupportFragmentManager().beginTransaction().
@@ -193,9 +219,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 Log.e("TAG", "onQueryTextSubmit log");
-                if (HomeFragment.AllTodo != null) {
+                if (currentFragment == 1) {
                     HomeFragment.recyclerViewAdapter.filter(query);
-                } else if (TestFragment.AllTodoWhereCategory != null) {
+                } else if (currentFragment == 2) {
                     TestFragment.recyclerViewAdapter.filter(query);
                 }
                 return true;
@@ -204,9 +230,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 Log.e("TAG", "onQueryTextChange log");
-                if (HomeFragment.AllTodo != null) {
+                if (currentFragment == 1) {
                     HomeFragment.recyclerViewAdapter.filter(newText);
-                } else if (TestFragment.AllTodoWhereCategory != null) {
+                } else if (currentFragment == 2) {
+                    Log.e("TAG", "TestFragment log");
+
                     TestFragment.recyclerViewAdapter.filter(newText);
                 }
 

@@ -68,15 +68,4 @@ public class TestFragment extends Fragment {
         fragmentTestBinding.recyclerView.setAdapter(recyclerViewAdapter);
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        AllTodoWhereCategory.clear();
-        HomeFragment.AllTodo = RoDatabase.getInstance(getContext()).todoDao().getAllTodo();
-
-
-//        Toast.makeText(getContext(), "onStop", Toast.LENGTH_SHORT).show();
-
-
-    }
 }

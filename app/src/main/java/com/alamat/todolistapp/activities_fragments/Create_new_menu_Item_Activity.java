@@ -1,7 +1,9 @@
 package com.alamat.todolistapp.activities_fragments;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -31,6 +33,8 @@ public class Create_new_menu_Item_Activity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    static ToDoCategoryModel updatingMenue;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,20 +46,49 @@ public class Create_new_menu_Item_Activity extends AppCompatActivity {
         setSupportActionBar(activityCreateNewMenuItemBinding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        activityCreateNewMenuItemBinding.btnAddNewMenuItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                // insert and fetch new database ToDoCategory data
-                insertTodoCategory();
-                MainActivity.AllToDoCategory = RoDatabase.getInstance(getBaseContext()).todoDao().getAllTodoCategory();
+        if (MainActivity.updateMenue != null) {
+//
+//            Intent intent = this.getIntent();
+//            Bundle extras = intent.getExtras();
+//            String updateMenue = extras.getString("updateMenue");
+            String  updateMenue = getIntent().getExtras().getString("updateMenue");
+            Log.e("TAG", "updateMenue ");
 
-                // recreate menu and notify data changed
-                MainActivity.createmenu();
-                MainActivity.arrayAdapter.notifyDataSetChanged();
-                finish();
-            }
-        });
+//            String updateMenue = MainActivity.list.get(getIntent().getExtras().getInt("updateMenue"));
+
+            updatingMenue = RoDatabase.getInstance(this).todoDao().getTodoCategoryWhere(updateMenue);
+            activityCreateNewMenuItemBinding.etMenuItemTitle.setText(updatingMenue.getCategoryName());
+            activityCreateNewMenuItemBinding.btnAddNewMenuItem.setText("حفظ التعديل");
+
+            activityCreateNewMenuItemBinding.btnAddNewMenuItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    RoDatabase.getInstance(this).todoDao().updateAllRecordsWhere(updateMenue, activityCreateNewMenuItemBinding.etMenuItemTitle.getText().toString());
+                    RoDatabase.getInstance(this).todoDao().updateTodoCategory(updateMenue, activityCreateNewMenuItemBinding.etMenuItemTitle.getText().toString());
+                    finish();
+                    MainActivity.updateMenue = null;
+                    MainActivity.list.set(getIntent().getExtras().getInt("listPos"), activityCreateNewMenuItemBinding.etMenuItemTitle.getText().toString());
+                    MainActivity.arrayAdapter.notifyDataSetChanged();
+                }
+            });
+        } else {
+            activityCreateNewMenuItemBinding.btnAddNewMenuItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    // insert and fetch new database ToDoCategory data
+                    insertTodoCategory();
+                    MainActivity.AllToDoCategory = RoDatabase.getInstance(getBaseContext()).todoDao().getAllTodoCategory();
+
+                    // recreate menu and notify data changed
+                    MainActivity.createmenu();
+                    MainActivity.arrayAdapter.notifyDataSetChanged();
+                    finish();
+                }
+            });
+        }
+
 
     }
 
@@ -70,8 +103,9 @@ public class Create_new_menu_Item_Activity extends AppCompatActivity {
 //            Log.e("TAG", "Catch");
 
             Toast.makeText(getApplicationContext(),
-                    "لديك قسم آخر بنفس الاسم مسبقًا، حاول مرة اخرى",Toast.LENGTH_SHORT)
-                    .show();;
+                    "لديك قسم آخر بنفس الاسم مسبقًا، حاول مرة اخرى", Toast.LENGTH_SHORT)
+                    .show();
+            ;
         }
     }
 }

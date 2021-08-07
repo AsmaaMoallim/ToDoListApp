@@ -35,6 +35,9 @@ public interface TodoDao {
     @Query("delete from todomodel where todoCategory = :todoCategory")
     void deleteAllRecordsWhere(String todoCategory);
 
+    @Query("update todomodel set todoCategory = :NewCategoryName where todoCategory = :OldCategoryName")
+    void updateAllRecordsWhere(String OldCategoryName, String NewCategoryName);
+
     @Query("select * from todomodel where todoTitle like '%' || :key || '%' or todoContect like '%' || :key || '%'")
     List<ToDoModel> search(String key);
 
@@ -45,6 +48,12 @@ public interface TodoDao {
 
     @Query("select * from toDoCategoryModel;")
     List<ToDoCategoryModel> getAllTodoCategory();
+
+    @Query("select * from toDoCategoryModel where CategoryName = :CategoryName")
+    ToDoCategoryModel getTodoCategoryWhere(String CategoryName);
+
+    @Query("update toDoCategoryModel set CategoryName = :NewCategoryName where CategoryName = :OldCategoryName")
+    void updateTodoCategory(String OldCategoryName, String NewCategoryName);
 
     @Query("delete from toDoCategoryModel where CategoryName = :CategoryName")
     void deleteTodoCategoryWhere(String CategoryName);

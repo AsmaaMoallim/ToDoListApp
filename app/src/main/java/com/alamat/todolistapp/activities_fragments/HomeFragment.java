@@ -55,14 +55,4 @@ public class HomeFragment extends Fragment {
 
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-         AllTodo = null;
-        TestFragment.AllTodoWhereCategory = RoDatabase.getInstance(getContext()).todoDao().getAllTodoWhereCategory(TestFragment.categoryColValue);;
-
-//        Toast.makeText(getContext(), "onStop", Toast.LENGTH_SHORT).show();
-
-
-    }
 }
